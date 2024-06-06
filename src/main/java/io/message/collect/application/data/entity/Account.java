@@ -1,22 +1,26 @@
-package io.message.collect.application.data;
+package io.message.collect.application.data.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
 @Table
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
-public class Person {
+@ToString
+public class Account {
 
     @PrimaryKey
-    private final String id;
+    private String id;
 
-    private final String name;
+    private String name;
 
-    private final int age;
+    private int age;
 
 }
