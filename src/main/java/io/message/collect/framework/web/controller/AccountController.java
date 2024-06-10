@@ -1,6 +1,7 @@
-package io.message.collect.application.web.controller;
+package io.message.collect.framework.web.controller;
 
-import io.message.collect.application.web.service.AccountService;
+import io.message.collect.application.input.AccountInput;
+import io.message.collect.domain.model.Account;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -8,18 +9,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
-@RequestMapping("/collect")
 @AllArgsConstructor
+@RequestMapping("/collect")
 public class AccountController {
 
-    private final AccountService accountService;
+    private final AccountInput accountInput;
 
     @PostMapping("/publish")
     public ResponseEntity<?> save(HttpServletRequest request) {
-        accountService.savePerson();
-
-
+        accountInput.save(() -> new Account(UUID.randomUUID().toString(), request.getParameter("name"), Integer.parseInt(request.getParameter("age"))));
+        
         return ResponseEntity.ok().build();
     }
 
