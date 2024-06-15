@@ -1,7 +1,7 @@
 package io.message.collect.application.input;
 
 import io.message.collect.application.usecase.InquiryUseCase;
-import io.message.collect.domain.interfaces.SaveAble;
+import io.message.collect.domain.interfaces.EntityAble;
 import io.message.collect.domain.model.Account;
 import io.message.collect.framework.database.AccountAdapter;
 import lombok.AllArgsConstructor;
@@ -17,8 +17,8 @@ public class AccountInput implements InquiryUseCase<Account> {
 
     @Override
     @Transactional
-    public Account save(SaveAble<Account> saveAble) {
+    public Account save(EntityAble<Account> saveAble) {
         return accountAdapter.save(saveAble);
     }
-    
+
 }
