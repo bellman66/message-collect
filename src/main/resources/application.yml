@@ -5,3 +5,18 @@ spring:
     port: 9042
     local-datacenter: datacenter1
     schema-action: create_if_not_exists
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: message
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+producers:
+  topics:
+    publish-message: publish_message
