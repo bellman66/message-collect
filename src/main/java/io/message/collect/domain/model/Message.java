@@ -1,15 +1,16 @@
 package io.message.collect.domain.model;
 
 import java.util.UUID;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 
 @Getter
 @Setter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
+@AllArgsConstructor
 public class Message {
 
     @PrimaryKey

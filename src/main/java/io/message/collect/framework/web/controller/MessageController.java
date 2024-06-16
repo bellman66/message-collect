@@ -1,6 +1,7 @@
 package io.message.collect.framework.web.controller;
 
 import io.message.collect.application.output.MessageOutput;
+import io.message.collect.domain.mapper.MessageMapper;
 import io.message.collect.domain.model.Message;
 import io.message.collect.framework.web.data.request.MessageApiRequestGroup;
 import java.util.concurrent.ExecutionException;
@@ -17,10 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class MessageController {
 
     private final MessageOutput messageOutput;
+    private final MessageMapper messageMapper;
 
     @PostMapping("/publish")
     public ResponseEntity<String> publishMessage(@RequestBody MessageApiRequestGroup.CreateApiRequest request) throws ExecutionException, InterruptedException {
-        Message message = Message.create(request.content());
+        Message message = messageMapper.toEntity(request);
         return ResponseEntity.ok(messageOutput.save(() -> message));
     }
 
