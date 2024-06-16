@@ -35,6 +35,11 @@ dependencies {
     // Spring Kafka
     // https://docs.spring.io/spring-kafka/reference/quick-tour.html
     implementation 'org.springframework.kafka:spring-kafka:3.2.0'
+
+    // MapStruct
+    // https://mapstruct.org/documentation/installation/
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 }
 
 tasks.named('test') {
