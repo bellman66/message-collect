@@ -1,7 +1,7 @@
 package io.message.collect.application.output;
 
 import io.message.collect.domain.interfaces.MessageAble;
-import io.message.collect.domain.model.SignalMessage;
+import io.message.collect.domain.message.SignalMessage;
 
 import java.util.concurrent.ExecutionException;
 
