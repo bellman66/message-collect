@@ -1,4 +1,4 @@
-package io.message.collect.domain.model.base;
+package io.message.collect.domain.message.base;
 
 import io.message.collect.domain.interfaces.MessageAble;
 import lombok.Getter;

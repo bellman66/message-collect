@@ -1,6 +1,6 @@
 package io.message.collect.domain.mapper;
 
-import io.message.collect.domain.model.SignalMessage;
+import io.message.collect.domain.message.SignalMessage;
 import io.message.collect.framework.web.data.request.MessageApiRequestGroup;
 import io.message.collect.global.base.MapperExtension;
 import org.mapstruct.Mapper;
