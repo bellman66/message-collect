@@ -2,7 +2,7 @@ package io.message.collect.framework.web.controller;
 
 import io.message.collect.application.output.MessageOutput;
 import io.message.collect.domain.mapper.MessageMapper;
-import io.message.collect.domain.model.SignalMessage;
+import io.message.collect.domain.message.SignalMessage;
 import io.message.collect.framework.web.data.request.MessageApiRequestGroup;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

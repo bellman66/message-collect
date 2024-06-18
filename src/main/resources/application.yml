@@ -1,7 +1,7 @@
 spring:
   cassandra:
     keyspace-name: message_collect
-    contact-points: 127.0.0.1
+    contact-points: localhost
     port: 9042
     local-datacenter: datacenter1
     schema-action: create_if_not_exists
@@ -20,3 +20,9 @@ spring:
 producers:
   topics:
     publish-message: publish_message
+
+consumers:
+  topics:
+    publish-message: publish_message
+  group:
+    name: message

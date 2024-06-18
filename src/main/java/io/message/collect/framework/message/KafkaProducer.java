@@ -2,7 +2,7 @@ package io.message.collect.framework.message;
 
 import io.message.collect.application.output.MessageOutput;
 import io.message.collect.domain.interfaces.MessageAble;
-import io.message.collect.domain.model.SignalMessage;
+import io.message.collect.domain.message.SignalMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
