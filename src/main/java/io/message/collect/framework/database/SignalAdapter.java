@@ -18,8 +18,9 @@ public class SignalAdapter implements SignalOutput<MechanicalSignal> {
     private final SignalRepository signalRepository;
 
     @Override
+    @Transactional
     public MechanicalSignal save(EntityAble<MechanicalSignal> entityAble) throws ExecutionException, InterruptedException {
         return signalRepository.save(entityAble.toEntity());
     }
-    
+
 }

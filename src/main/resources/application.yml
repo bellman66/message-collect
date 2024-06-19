@@ -15,7 +15,11 @@ spring:
     producer:
       bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerialize
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: false
+      
 
 producers:
   topics:
