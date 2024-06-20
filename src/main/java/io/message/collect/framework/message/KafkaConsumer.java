@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutionException;
 public class KafkaConsumer {
 
     private final SignalOutput<MechanicalSignal> signalOutput;
-    
+
     private final ObjectMapper objectMapper;
 
     @KafkaListener(topics = "${consumers.topics.publish-message}", groupId = "${consumers.group.name}")
