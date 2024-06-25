@@ -19,6 +19,8 @@ spring:
   jackson:
     deserialization:
       fail-on-unknown-properties: false
+  elasticsearch:
+    uris: localhost:9200
 
 producers:
   topics:
