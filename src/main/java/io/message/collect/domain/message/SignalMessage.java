@@ -8,7 +8,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
+@Document(indexName = "signal")
 @Getter
 @Setter
 @SuperBuilder
@@ -16,6 +20,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class SignalMessage extends StatusTrackingMessage<SignalMessage> implements EntityAble<MechanicalSignal> {
 
+    @Field(name = "content", type = FieldType.Text)
     private String content;
 
     @Override
