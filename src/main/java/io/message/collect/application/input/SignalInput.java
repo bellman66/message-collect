@@ -1,6 +1,7 @@
 package io.message.collect.application.input;
 
 import io.message.collect.application.output.SignalOutput;
+import io.message.collect.application.usecase.SignalReadUseCase;
 import io.message.collect.application.usecase.SignalStoreUseCase;
 import io.message.collect.domain.interfaces.EntityAble;
 import io.message.collect.domain.model.MechanicalSignal;
@@ -13,13 +14,18 @@ import java.util.concurrent.ExecutionException;
 @Service
 @AllArgsConstructor
 @Transactional(readOnly = true)
-public class SignalInput implements SignalStoreUseCase<MechanicalSignal> {
+public class SignalInput implements SignalStoreUseCase<MechanicalSignal>, SignalReadUseCase<MechanicalSignal> {
 
     private final SignalOutput<MechanicalSignal> signalOutput;
 
     @Override
     public MechanicalSignal save(EntityAble<MechanicalSignal> saveAble) throws ExecutionException, InterruptedException {
         return signalOutput.save(saveAble);
+    }
+
+    @Override
+    public MechanicalSignal findById(String id) {
+        return signalOutput.findById(id).orElseThrow();
     }
 
 }
