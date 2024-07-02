@@ -5,5 +5,5 @@ import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SignalRepository extends CassandraRepository<MechanicalSignal, String> {
+public interface MechanicalSignalRepository extends CassandraRepository<MechanicalSignal, String> {
 }
