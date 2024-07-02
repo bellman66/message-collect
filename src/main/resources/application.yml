@@ -21,6 +21,8 @@ spring:
       fail-on-unknown-properties: false
   elasticsearch:
     uris: localhost:9200
+    username: elastic
+    password: l=DHebjFOjYgIE+--EAX
 
 producers:
   topics:
