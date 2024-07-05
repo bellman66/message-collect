@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @Getter
 @SuperBuilder
@@ -19,7 +17,6 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 public abstract class DefaultMessage<T> implements MessageAble<T> {
 
     @Id
-    @Field(name = "id", type = FieldType.Text)
     @PrimaryKey
     private String id;
 
