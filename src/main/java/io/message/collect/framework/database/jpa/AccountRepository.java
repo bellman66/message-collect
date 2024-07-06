@@ -1,4 +1,4 @@
-package io.message.collect.framework.database.repository;
+package io.message.collect.framework.database.jpa;
 
 import io.message.collect.domain.model.Account;
 import org.springframework.data.cassandra.repository.CassandraRepository;

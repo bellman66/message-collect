@@ -3,7 +3,7 @@ package io.message.collect.framework.database;
 import io.message.collect.application.output.AccountOutput;
 import io.message.collect.domain.interfaces.EntityAble;
 import io.message.collect.domain.model.Account;
-import io.message.collect.framework.database.repository.AccountRepository;
+import io.message.collect.framework.database.jpa.AccountRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
