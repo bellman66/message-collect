@@ -1,10 +1,5 @@
 package io.message.collect.config;
 
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.time.Duration;
-import javax.net.ssl.SSLContext;
 import lombok.AllArgsConstructor;
 import org.apache.http.conn.ssl.TrustAllStrategy;
 import org.apache.http.ssl.SSLContextBuilder;
@@ -14,9 +9,15 @@ import org.springframework.data.elasticsearch.client.ClientConfiguration;
 import org.springframework.data.elasticsearch.client.elc.ElasticsearchConfiguration;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 
+import javax.net.ssl.SSLContext;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.time.Duration;
+
 @Configuration
 @AllArgsConstructor
-@EnableElasticsearchRepositories(basePackages = "io.message.collect.domain.message")
+@EnableElasticsearchRepositories(basePackages = "io.message.collect")
 public class ElasticsearchConfig extends ElasticsearchConfiguration {
 
     private final ElasticsearchProperties elasticsearchProperties;

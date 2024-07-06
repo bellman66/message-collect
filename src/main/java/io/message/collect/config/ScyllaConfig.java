@@ -5,8 +5,6 @@ import org.springframework.boot.autoconfigure.cassandra.CassandraProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.cassandra.config.AbstractCassandraConfiguration;
 import org.springframework.data.cassandra.config.SchemaAction;
-import org.springframework.data.cassandra.core.convert.CassandraConverter;
-import org.springframework.data.cassandra.core.convert.MappingCassandraConverter;
 import org.springframework.data.cassandra.core.cql.keyspace.CreateKeyspaceSpecification;
 import org.springframework.data.cassandra.core.cql.keyspace.DropKeyspaceSpecification;
 
@@ -16,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ScyllaConfig extends AbstractCassandraConfiguration {
 
-    private static final String BASE_PACKAGE = "io.message.collect.domain";
+    private static final String BASE_PACKAGE = "io.message.collect";
 
     private CassandraProperties properties;
 
@@ -60,9 +58,4 @@ public class ScyllaConfig extends AbstractCassandraConfiguration {
         return new String[]{BASE_PACKAGE};
     }
 
-    @Override
-    public CassandraConverter cassandraConverter() {
-        return new MappingCassandraConverter();
-    }
-    
 }
