@@ -1,8 +1,8 @@
-package io.message.collect.application.output;
+package io.message.collect.application.port.input;
 
 import io.message.collect.domain.interfaces.EntityAble;
 
-public interface AccountOutput<T> {
+public interface AccountSignUpUseCase<T> {
 
     T save(EntityAble<T> saveAble);
 

@@ -1,8 +1,8 @@
-package io.message.collect.application.usecase;
+package io.message.collect.application.port.output;
 
 import io.message.collect.domain.interfaces.EntityAble;
 
-public interface InquiryUseCase<T> {
+public interface AccountOutput<T> {
 
     T save(EntityAble<T> saveAble);
 

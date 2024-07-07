@@ -1,8 +1,7 @@
-package io.message.collect.application.usecase;
+package io.message.collect.application.port.input;
 
 import io.message.collect.domain.interfaces.EntityAble;
 import io.message.collect.domain.model.MechanicalSignal;
-
 import java.util.concurrent.ExecutionException;
 
 public interface SignalStoreUseCase<T extends MechanicalSignal> {

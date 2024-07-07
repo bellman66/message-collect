@@ -1,8 +1,7 @@
-package io.message.collect.application.output;
+package io.message.collect.application.port.output;
 
 import io.message.collect.domain.interfaces.EntityAble;
 import io.message.collect.domain.model.MechanicalSignal;
-
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 

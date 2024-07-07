@@ -1,8 +1,7 @@
-package io.message.collect.application.output;
+package io.message.collect.application.port.output;
 
 import io.message.collect.domain.interfaces.MessageAble;
 import io.message.collect.domain.message.SignalMessage;
-
 import java.util.concurrent.ExecutionException;
 
 public interface MessageOutput {

@@ -1,4 +1,4 @@
-package io.message.collect.application.usecase;
+package io.message.collect.application.port.input;
 
 import io.message.collect.domain.search.base.Search;
 
