@@ -1,19 +1,18 @@
 package io.message.collect.framework.database;
 
-import io.message.collect.application.output.SearchOutput;
-import io.message.collect.application.output.SignalOutput;
+import io.message.collect.application.port.output.SearchOutput;
+import io.message.collect.application.port.output.SignalOutput;
 import io.message.collect.domain.interfaces.EntityAble;
 import io.message.collect.domain.interfaces.SearchAble;
 import io.message.collect.domain.model.MechanicalSignal;
 import io.message.collect.domain.search.SignalSearch;
 import io.message.collect.framework.database.jpa.MechanicalSignalRepository;
+import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
-import java.util.concurrent.ExecutionException;
 
 @Service
 @AllArgsConstructor

@@ -1,6 +1,6 @@
 package io.message.collect.framework.database;
 
-import io.message.collect.application.output.AccountOutput;
+import io.message.collect.application.port.output.AccountOutput;
 import io.message.collect.domain.interfaces.EntityAble;
 import io.message.collect.domain.model.Account;
 import io.message.collect.framework.database.jpa.AccountRepository;
