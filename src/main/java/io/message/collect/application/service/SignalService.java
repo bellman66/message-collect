@@ -1,22 +1,21 @@
-package io.message.collect.application.input;
+package io.message.collect.application.service;
 
-import io.message.collect.application.output.SearchOutput;
-import io.message.collect.application.output.SignalOutput;
-import io.message.collect.application.usecase.SignalReadUseCase;
-import io.message.collect.application.usecase.SignalStoreUseCase;
+import io.message.collect.application.port.input.SignalReadUseCase;
+import io.message.collect.application.port.input.SignalStoreUseCase;
+import io.message.collect.application.port.output.SearchOutput;
+import io.message.collect.application.port.output.SignalOutput;
 import io.message.collect.domain.interfaces.EntityAble;
 import io.message.collect.domain.model.MechanicalSignal;
 import io.message.collect.domain.search.SignalSearch;
+import java.util.concurrent.ExecutionException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.concurrent.ExecutionException;
-
 @Service
 @AllArgsConstructor
 @Transactional(readOnly = true)
-public class SignalInput implements SignalStoreUseCase<MechanicalSignal>, SignalReadUseCase<SignalSearch> {
+public class SignalService implements SignalStoreUseCase<MechanicalSignal>, SignalReadUseCase<SignalSearch> {
 
     private final SignalOutput<MechanicalSignal> signalOutput;
     private final SearchOutput<SignalSearch> searchOutput;
