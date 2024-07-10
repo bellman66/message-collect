@@ -6,15 +6,14 @@ import io.message.collect.domain.mapper.MessageMapper;
 import io.message.collect.domain.message.SignalMessage;
 import io.message.collect.domain.search.SignalSearch;
 import io.message.collect.framework.web.data.request.MessageApiRequestGroup;
-import java.util.concurrent.ExecutionException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @AllArgsConstructor
@@ -31,9 +30,9 @@ public class MessageController {
         return ResponseEntity.ok(messageOutput.save(signalMessage));
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<String> searchMessage(@RequestParam String id) {
-        return ResponseEntity.ok(signalSignalReadUseCase.searchById(id).toString());
+    @PostMapping("/search")
+    public ResponseEntity<String> searchGroupByQuery(@RequestBody String query) {
+        return ResponseEntity.ok(signalSignalReadUseCase.searchGroupByQuery(query).toString());
     }
 
 }
