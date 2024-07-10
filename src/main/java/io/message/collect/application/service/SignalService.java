@@ -1,5 +1,6 @@
 package io.message.collect.application.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.message.collect.application.port.input.SignalReadUseCase;
 import io.message.collect.application.port.input.SignalStoreUseCase;
 import io.message.collect.application.port.output.SearchOutput;
@@ -7,10 +8,15 @@ import io.message.collect.application.port.output.SignalOutput;
 import io.message.collect.domain.interfaces.EntityAble;
 import io.message.collect.domain.model.MechanicalSignal;
 import io.message.collect.domain.search.SignalSearch;
-import java.util.concurrent.ExecutionException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.elasticsearch.core.SearchHit;
+import org.springframework.data.elasticsearch.core.query.Query;
+import org.springframework.data.elasticsearch.core.query.StringQuery;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @AllArgsConstructor
@@ -19,6 +25,7 @@ public class SignalService implements SignalStoreUseCase<MechanicalSignal>, Sign
 
     private final SignalOutput<MechanicalSignal> signalOutput;
     private final SearchOutput<SignalSearch> searchOutput;
+    private final ObjectMapper objectMapper;
 
     @Override
     public MechanicalSignal save(EntityAble<MechanicalSignal> saveAble) throws ExecutionException, InterruptedException {
@@ -28,6 +35,12 @@ public class SignalService implements SignalStoreUseCase<MechanicalSignal>, Sign
     @Override
     public SignalSearch searchById(String id) {
         return searchOutput.searchById(id).orElseThrow();
+    }
+
+    @Override
+    public List<SearchHit<SignalSearch>> searchGroupByQuery(String query) {
+        Query searchQuery = objectMapper.convertValue(query, StringQuery.class);
+        return searchOutput.searchByQuery(searchQuery);
     }
 
 }
