@@ -7,12 +7,18 @@ import io.message.collect.domain.interfaces.SearchAble;
 import io.message.collect.domain.model.MechanicalSignal;
 import io.message.collect.domain.search.SignalSearch;
 import io.message.collect.framework.database.jpa.MechanicalSignalRepository;
-import java.util.Optional;
-import java.util.concurrent.ExecutionException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.SearchHit;
+import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @AllArgsConstructor
@@ -43,6 +49,13 @@ public class SignalAdapter implements SignalOutput<MechanicalSignal>, SearchOutp
     @Override
     public Optional<SignalSearch> searchById(String id) {
         return Optional.ofNullable(elasticsearchOperations.get(id, SignalSearch.class));
+    }
+
+    @Override
+    public List<SearchHit<SignalSearch>> searchByQuery(Query query) {
+        SearchHits<SignalSearch> searchHits = elasticsearchOperations.search(query, SignalSearch.class);
+
+        return searchHits.hasSearchHits() ? searchHits.getSearchHits() : Collections.emptyList();
     }
 
 }
