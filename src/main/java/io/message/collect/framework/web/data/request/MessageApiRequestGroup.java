@@ -5,4 +5,7 @@ public class MessageApiRequestGroup {
     public record CreateApiRequest(String content) {
     }
 
+    public record SearchApiRequest(String content) {
+    }
+
 }

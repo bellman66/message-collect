@@ -11,7 +11,6 @@ import io.message.collect.domain.search.SignalSearch;
 import lombok.AllArgsConstructor;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.query.Query;
-import org.springframework.data.elasticsearch.core.query.StringQuery;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,9 +37,8 @@ public class SignalService implements SignalStoreUseCase<MechanicalSignal>, Sign
     }
 
     @Override
-    public List<SearchHit<SignalSearch>> searchGroupByQuery(String query) {
-        Query searchQuery = objectMapper.convertValue(query, StringQuery.class);
-        return searchOutput.searchByQuery(searchQuery);
+    public List<SearchHit<SignalSearch>> searchGroupByQuery(Query query) {
+        return searchOutput.searchByQuery(query);
     }
 
 }
