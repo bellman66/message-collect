@@ -1,5 +1,6 @@
 package io.message.collect.config;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.cassandra.CassandraProperties;
 import org.springframework.context.annotation.Configuration;
@@ -7,8 +8,7 @@ import org.springframework.data.cassandra.config.AbstractCassandraConfiguration;
 import org.springframework.data.cassandra.config.SchemaAction;
 import org.springframework.data.cassandra.core.cql.keyspace.CreateKeyspaceSpecification;
 import org.springframework.data.cassandra.core.cql.keyspace.DropKeyspaceSpecification;
-
-import java.util.List;
+import org.springframework.data.cassandra.core.cql.keyspace.KeyspaceOption;
 
 @Configuration
 @AllArgsConstructor
@@ -20,7 +20,7 @@ public class ScyllaConfig extends AbstractCassandraConfiguration {
 
     @Override
     protected List<CreateKeyspaceSpecification> getKeyspaceCreations() {
-        return List.of(CreateKeyspaceSpecification.createKeyspace(getKeyspaceName()));
+        return List.of(CreateKeyspaceSpecification.createKeyspace(getKeyspaceName()).with(KeyspaceOption.DURABLE_WRITES, true));
     }
 
     @Override
@@ -55,7 +55,7 @@ public class ScyllaConfig extends AbstractCassandraConfiguration {
 
     @Override
     public String[] getEntityBasePackages() {
-        return new String[]{BASE_PACKAGE};
+        return new String[] {BASE_PACKAGE};
     }
 
 }
