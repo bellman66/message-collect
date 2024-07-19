@@ -1,0 +1,35 @@
+spring:
+  cassandra:
+    keyspace-name: message_collect
+    contact-points: localhost
+    port: 9042
+    local-datacenter: datacenter1
+    schema-action: create_if_not_exists
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: message
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: false
+  elasticsearch:
+    uris: localhost:9200
+    username: elastic
+    password: l=DHebjFOjYgIE+--EAX
+
+producers:
+  topics:
+    publish-message: publish_message
+
+consumers:
+  topics:
+    publish-message: publish_message
+  group:
+    name: message
