@@ -17,7 +17,7 @@ import java.time.Duration;
 
 @Configuration
 @AllArgsConstructor
-@EnableElasticsearchRepositories(basePackages = "io.message.collect")
+@EnableElasticsearchRepositories(basePackages = "io.message.message")
 public class ElasticsearchConfig extends ElasticsearchConfiguration {
 
     private final ElasticsearchProperties elasticsearchProperties;

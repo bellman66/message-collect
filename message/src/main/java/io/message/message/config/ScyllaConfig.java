@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ScyllaConfig extends AbstractCassandraConfiguration {
 
-    private static final String BASE_PACKAGE = "io.message.collect";
+    private static final String BASE_PACKAGE = "io.message.message";
 
     private CassandraProperties properties;
 
