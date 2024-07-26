@@ -1,6 +1,9 @@
+server:
+  port: 8081
+
 spring:
   cassandra:
-    keyspace-name: message_collect
+    keyspace-name: account_collect
     contact-points: localhost
     port: 9042
     local-datacenter: datacenter1
