@@ -27,6 +27,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'org.springframework.boot:spring-boot-starter-undertow'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
     // https://docs.spring.io/spring-data/cassandra/reference/cassandra/getting-started.html
     implementation 'org.springframework.data:spring-data-cassandra'
