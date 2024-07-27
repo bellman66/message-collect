@@ -7,6 +7,9 @@ import io.message.message.domain.interfaces.SearchAble;
 import io.message.message.domain.model.MechanicalSignal;
 import io.message.message.domain.search.SignalSearch;
 import io.message.message.framework.database.jpa.MechanicalSignalRepository;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHit;
@@ -14,11 +17,7 @@ import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.ExecutionException;
+import reactor.core.publisher.Mono;
 
 @Service
 @AllArgsConstructor
@@ -31,7 +30,7 @@ public class SignalAdapter implements SignalOutput<MechanicalSignal>, SearchOutp
 
     @Override
     @Transactional
-    public MechanicalSignal save(EntityAble<MechanicalSignal> entityAble) throws ExecutionException, InterruptedException {
+    public Mono<MechanicalSignal> save(EntityAble<MechanicalSignal> entityAble) {
         return mechanicalsignalRepository.save(entityAble.toEntity());
     }
 
@@ -42,7 +41,7 @@ public class SignalAdapter implements SignalOutput<MechanicalSignal>, SearchOutp
 
     @Override
     @Transactional
-    public SignalSearch save(SearchAble<SignalSearch> search) throws ExecutionException, InterruptedException {
+    public SignalSearch save(SearchAble<SignalSearch> search) {
         return elasticsearchOperations.save(search.toSearch());
     }
 

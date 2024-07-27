@@ -6,6 +6,7 @@ import io.message.message.domain.mapper.MessageMapper;
 import io.message.message.domain.message.SignalMessage;
 import io.message.message.domain.search.SignalSearch;
 import io.message.message.framework.web.data.request.MessageApiRequestGroup;
+import java.util.concurrent.ExecutionException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.elasticsearch.core.query.Criteria;
 import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
@@ -14,22 +15,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.concurrent.ExecutionException;
+import reactor.core.publisher.Mono;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/message")
 public class MessageController {
 
-    private final MessageOutput messageOutput;
+    private final MessageOutput<SignalMessage> messageOutput;
 
     private final SignalReadUseCase<SignalSearch> signalSignalReadUseCase;
 
     @PostMapping("/publish")
-    public ResponseEntity<String> publishMessage(@RequestBody MessageApiRequestGroup.CreateApiRequest request) throws ExecutionException, InterruptedException {
+    public Mono<ResponseEntity<String>> publishMessage(@RequestBody MessageApiRequestGroup.CreateApiRequest request) throws ExecutionException, InterruptedException {
         SignalMessage signalMessage = MessageMapper.INSTANCE.toMessage(request);
-        return ResponseEntity.ok(messageOutput.save(signalMessage));
+
+        return messageOutput.save(signalMessage).map(message -> ResponseEntity.ok(message.getId()));
     }
 
     @PostMapping("/search")
