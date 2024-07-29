@@ -30,9 +30,11 @@ spring:
 producers:
   topics:
     publish-message: publish_message
+    pending-message: pending_message
 
 consumers:
   topics:
     publish-message: publish_message
+    pending-message: pending_message
   group:
     name: message
