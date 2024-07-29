@@ -8,4 +8,5 @@ public interface MessageOutput<T extends SignalMessage> {
 
     Mono<T> save(MessageAble<T> messageAble);
 
+    void pending(MessageAble<T> messageAble);
 }
