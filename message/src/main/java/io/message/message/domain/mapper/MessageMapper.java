@@ -1,5 +1,6 @@
 package io.message.message.domain.mapper;
 
+import io.message.message.domain.message.PendingMessage;
 import io.message.message.domain.message.SignalMessage;
 import io.message.message.framework.web.data.request.MessageApiRequestGroup;
 import io.message.message.global.base.MapperExtension;
@@ -16,4 +17,5 @@ public interface MessageMapper extends MapperExtension {
     @Mapping(target = "status", constant = "DRAFT")
     SignalMessage toMessage(MessageApiRequestGroup.CreateApiRequest request);
 
+    PendingMessage toPendingMessage(SignalMessage message, Exception exception);
 }

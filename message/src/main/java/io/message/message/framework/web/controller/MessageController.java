@@ -6,7 +6,6 @@ import io.message.message.domain.mapper.MessageMapper;
 import io.message.message.domain.message.SignalMessage;
 import io.message.message.domain.search.SignalSearch;
 import io.message.message.framework.web.data.request.MessageApiRequestGroup;
-import java.util.concurrent.ExecutionException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.elasticsearch.core.query.Criteria;
 import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
@@ -27,7 +26,7 @@ public class MessageController {
     private final SignalReadUseCase<SignalSearch> signalSignalReadUseCase;
 
     @PostMapping("/publish")
-    public Mono<ResponseEntity<String>> publishMessage(@RequestBody MessageApiRequestGroup.CreateApiRequest request) throws ExecutionException, InterruptedException {
+    public Mono<ResponseEntity<String>> publishMessage(@RequestBody MessageApiRequestGroup.CreateApiRequest request) {
         SignalMessage signalMessage = MessageMapper.INSTANCE.toMessage(request);
 
         return messageOutput.save(signalMessage).map(message -> ResponseEntity.ok(message.getId()));
