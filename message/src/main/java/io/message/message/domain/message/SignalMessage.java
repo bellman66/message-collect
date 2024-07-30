@@ -7,10 +7,7 @@ import io.message.message.domain.mapper.SignalMapper;
 import io.message.message.domain.message.base.StatusTrackingMessage;
 import io.message.message.domain.model.MechanicalSignal;
 import io.message.message.domain.search.SignalSearch;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Getter
@@ -18,6 +15,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class SignalMessage extends StatusTrackingMessage<SignalMessage> implements EntityAble<MechanicalSignal>, SearchAble<SignalSearch> {
 
     private String content;
