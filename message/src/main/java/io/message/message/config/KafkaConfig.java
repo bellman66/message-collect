@@ -6,10 +6,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
-import org.springframework.kafka.core.DefaultKafkaProducerFactory;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.core.reactive.ReactiveKafkaConsumerTemplate;
+import org.springframework.kafka.core.reactive.ReactiveKafkaProducerTemplate;
 import org.springframework.kafka.support.serializer.JsonSerializer;
+import reactor.kafka.receiver.ReceiverOptions;
+import reactor.kafka.sender.SenderOptions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,17 +23,30 @@ public class KafkaConfig {
     private String BOOTSTRAPSERVERS;
 
     @Bean
-    public ProducerFactory<String, String> producerFactory() {
+    public ReceiverOptions<String, String> receiverOptions() {
         Map<String, Object> config = new HashMap<>();
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAPSERVERS);
         config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-        return new DefaultKafkaProducerFactory<>(config);
+        return ReceiverOptions.create(config);
     }
 
     @Bean
-    public KafkaTemplate kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
+    public SenderOptions<String, String> senderOptions() {
+        Map<String, Object> config = new HashMap<>();
+        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAPSERVERS);
+        config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        return SenderOptions.create(config);
     }
 
+    @Bean
+    public ReactiveKafkaConsumerTemplate reactiveKafkaConsumerTemplate() {
+        return new ReactiveKafkaConsumerTemplate<>(receiverOptions());
+    }
+
+    @Bean
+    public ReactiveKafkaProducerTemplate reactiveKafkaProducerTemplate() {
+        return new ReactiveKafkaProducerTemplate<>(senderOptions());
+    }
 }
