@@ -34,10 +34,9 @@ public class KafkaConsumer {
             searchOutput.save(signalMessage);
 
             // Save Main Database
-            signalOutput.save(signalMessage);
+            signalOutput.save(signalMessage).block();
         } catch (Exception exception) {
             pendingMessageKafkaProducer.pending(MessageMapper.INSTANCE.toPendingMessage(signalMessage, exception));
         }
     }
-
 }
