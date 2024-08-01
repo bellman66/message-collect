@@ -7,13 +7,13 @@ import io.message.message.application.port.output.SignalOutput;
 import io.message.message.domain.interfaces.EntityAble;
 import io.message.message.domain.model.MechanicalSignal;
 import io.message.message.domain.search.SignalSearch;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -30,13 +30,7 @@ public class SignalService implements SignalStoreUseCase<MechanicalSignal>, Sign
     }
 
     @Override
-    public SignalSearch searchById(String id) {
-        return searchOutput.searchById(id).orElseThrow();
-    }
-
-    @Override
-    public List<SearchHit<SignalSearch>> searchGroupByQuery(Query query) {
+    public Flux<SearchHit<SignalSearch>> searchGroupByQuery(Query query) {
         return searchOutput.searchByQuery(query);
     }
-
 }

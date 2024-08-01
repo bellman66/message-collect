@@ -8,5 +8,4 @@ import reactor.core.publisher.Mono;
 public interface SignalStoreUseCase<T extends MechanicalSignal> {
 
     Mono<T> save(EntityAble<T> saveAble) throws ExecutionException, InterruptedException;
-
 }
