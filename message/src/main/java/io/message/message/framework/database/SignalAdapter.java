@@ -7,16 +7,13 @@ import io.message.message.domain.interfaces.SearchAble;
 import io.message.message.domain.model.MechanicalSignal;
 import io.message.message.domain.search.SignalSearch;
 import io.message.message.framework.database.jpa.MechanicalSignalRepository;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 import lombok.AllArgsConstructor;
-import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.ReactiveElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHit;
-import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -26,7 +23,7 @@ public class SignalAdapter implements SignalOutput<MechanicalSignal>, SearchOutp
 
     private final MechanicalSignalRepository mechanicalsignalRepository;
 
-    private final ElasticsearchOperations elasticsearchOperations;
+    private final ReactiveElasticsearchOperations reactiveElasticsearchOperations;
 
     @Override
     @Transactional
@@ -35,26 +32,23 @@ public class SignalAdapter implements SignalOutput<MechanicalSignal>, SearchOutp
     }
 
     @Override
-    public Optional<MechanicalSignal> findById(String id) {
-        return Optional.ofNullable(elasticsearchOperations.get(id, MechanicalSignal.class));
+    public Mono<MechanicalSignal> findById(String id) {
+        return reactiveElasticsearchOperations.get(id, MechanicalSignal.class);
     }
 
     @Override
     @Transactional
-    public SignalSearch save(SearchAble<SignalSearch> search) {
-        return elasticsearchOperations.save(search.toSearch());
+    public Mono<SignalSearch> save(SearchAble<SignalSearch> search) {
+        return reactiveElasticsearchOperations.save(search.toSearch());
     }
 
     @Override
-    public Optional<SignalSearch> searchById(String id) {
-        return Optional.ofNullable(elasticsearchOperations.get(id, SignalSearch.class));
+    public Mono<SignalSearch> searchById(String id) {
+        return reactiveElasticsearchOperations.get(id, SignalSearch.class);
     }
 
     @Override
-    public List<SearchHit<SignalSearch>> searchByQuery(Query query) {
-        SearchHits<SignalSearch> searchHits = elasticsearchOperations.search(query, SignalSearch.class);
-
-        return searchHits.hasSearchHits() ? searchHits.getSearchHits() : Collections.emptyList();
+    public Flux<SearchHit<SignalSearch>> searchByQuery(Query query) {
+        return reactiveElasticsearchOperations.search(query, SignalSearch.class);
     }
-
 }
