@@ -33,8 +33,11 @@ public class MessageController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<String> searchGroupByQuery(@RequestBody MessageApiRequestGroup.SearchApiRequest request) {
-        return ResponseEntity.ok(signalSignalReadUseCase.searchGroupByQuery(new CriteriaQuery(new Criteria("content").matches(request.content()))).toString());
-    }
+    public Mono<ResponseEntity<String>> searchGroupByQuery(@RequestBody MessageApiRequestGroup.SearchApiRequest request) {
+        CriteriaQuery query = new CriteriaQuery(new Criteria("content").matches(request.content()));
 
+        return signalSignalReadUseCase.searchGroupByQuery(query)
+                .collectList()
+                .map(value -> ResponseEntity.ok(value.toString()));
+    }
 }
