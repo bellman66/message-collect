@@ -13,7 +13,5 @@ public interface SearchOutput<T extends Search> {
 
     Mono<T> save(SearchAble<T> search) throws ExecutionException, InterruptedException;
 
-    Mono<SignalSearch> searchById(String id);
-
     Flux<SearchHit<SignalSearch>> searchByQuery(Query query);
 }

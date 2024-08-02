@@ -32,19 +32,9 @@ public class SignalAdapter implements SignalOutput<MechanicalSignal>, SearchOutp
     }
 
     @Override
-    public Mono<MechanicalSignal> findById(String id) {
-        return reactiveElasticsearchOperations.get(id, MechanicalSignal.class);
-    }
-
-    @Override
     @Transactional
     public Mono<SignalSearch> save(SearchAble<SignalSearch> search) {
         return reactiveElasticsearchOperations.save(search.toSearch());
-    }
-
-    @Override
-    public Mono<SignalSearch> searchById(String id) {
-        return reactiveElasticsearchOperations.get(id, SignalSearch.class);
     }
 
     @Override

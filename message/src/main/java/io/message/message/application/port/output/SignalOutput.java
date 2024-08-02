@@ -8,6 +8,4 @@ import reactor.core.publisher.Mono;
 public interface SignalOutput<T extends MechanicalSignal> {
 
     Mono<T> save(EntityAble<T> messageAble) throws ExecutionException, InterruptedException;
-
-    Mono<MechanicalSignal> findById(String id);
 }
