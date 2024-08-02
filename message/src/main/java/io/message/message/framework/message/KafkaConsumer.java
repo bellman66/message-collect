@@ -9,11 +9,13 @@ import io.message.message.domain.message.PendingMessage;
 import io.message.message.domain.message.SignalMessage;
 import io.message.message.domain.model.MechanicalSignal;
 import io.message.message.domain.search.SignalSearch;
+import java.util.concurrent.ExecutionException;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
@@ -26,17 +28,14 @@ public class KafkaConsumer {
 
     @KafkaListener(topics = "${consumers.topics.publish-message}", groupId = "${consumers.group.name}")
     @Transactional
-    public void consumePublishMessage(ConsumerRecord<String, String> record) throws JsonProcessingException {
+    public void consumePublishMessage(ConsumerRecord<String, String> record) throws JsonProcessingException, ExecutionException, InterruptedException {
         SignalMessage signalMessage = objectMapper.readValue(record.value(), SignalMessage.class);
 
-        try {
-            // Save Search Database
-            searchOutput.save(signalMessage);
+        Mono<SignalSearch> searchSaveMono = searchOutput.save(signalMessage);
+        Mono<MechanicalSignal> signalSaveMono = signalOutput.save(signalMessage);
 
-            // Save Main Database
-            signalOutput.save(signalMessage).block();
-        } catch (Exception exception) {
-            pendingMessageKafkaProducer.pending(MessageMapper.INSTANCE.toPendingMessage(signalMessage, exception));
-        }
+        Mono.when(searchSaveMono, signalSaveMono)
+                .doOnError(throwable -> pendingMessageKafkaProducer.pending(MessageMapper.INSTANCE.toPendingMessage(signalMessage, throwable)))
+                .subscribe();
     }
 }

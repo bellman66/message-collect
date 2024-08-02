@@ -17,5 +17,5 @@ public interface MessageMapper extends MapperExtension {
     @Mapping(target = "status", constant = "DRAFT")
     SignalMessage toMessage(MessageApiRequestGroup.CreateApiRequest request);
 
-    PendingMessage toPendingMessage(SignalMessage message, Exception exception);
+    PendingMessage toPendingMessage(SignalMessage message, Throwable throwable);
 }

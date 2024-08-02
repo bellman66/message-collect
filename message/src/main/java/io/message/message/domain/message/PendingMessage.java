@@ -1,7 +1,11 @@
 package io.message.message.domain.message;
 
 import io.message.message.domain.message.base.StatusTrackingMessage;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Getter
@@ -12,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = false)
 public class PendingMessage extends StatusTrackingMessage<PendingMessage> {
 
-    private Exception exception;
+    private Throwable throwable;
 
     @Override
     public PendingMessage toMessage() {
