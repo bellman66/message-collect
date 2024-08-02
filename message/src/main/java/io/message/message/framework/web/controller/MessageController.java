@@ -6,7 +6,9 @@ import io.message.message.domain.mapper.MessageMapper;
 import io.message.message.domain.message.SignalMessage;
 import io.message.message.domain.search.SignalSearch;
 import io.message.message.framework.web.data.request.MessageApiRequestGroup;
+import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.query.Criteria;
 import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
 import org.springframework.http.ResponseEntity;
@@ -33,11 +35,11 @@ public class MessageController {
     }
 
     @PostMapping("/search")
-    public Mono<ResponseEntity<String>> searchGroupByQuery(@RequestBody MessageApiRequestGroup.SearchApiRequest request) {
+    public Mono<ResponseEntity<List<SearchHit<SignalSearch>>>> searchGroupByQuery(@RequestBody MessageApiRequestGroup.SearchApiRequest request) {
         CriteriaQuery query = new CriteriaQuery(new Criteria("content").matches(request.content()));
 
         return signalSignalReadUseCase.searchGroupByQuery(query)
                 .collectList()
-                .map(value -> ResponseEntity.ok(value.toString()));
+                .map(ResponseEntity::ok);
     }
 }
