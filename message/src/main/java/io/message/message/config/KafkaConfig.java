@@ -11,6 +11,7 @@ import org.springframework.kafka.core.reactive.ReactiveKafkaConsumerTemplate;
 import org.springframework.kafka.core.reactive.ReactiveKafkaProducerTemplate;
 import reactor.kafka.receiver.ReceiverOptions;
 import reactor.kafka.sender.SenderOptions;
+import reactor.kafka.sender.TransactionManager;
 
 import java.util.List;
 
@@ -46,5 +47,10 @@ public class KafkaConfig {
     @Bean
     public ReactiveKafkaProducerTemplate reactiveKafkaProducerTemplate() {
         return new ReactiveKafkaProducerTemplate<>(senderOptions());
+    }
+
+    @Bean
+    public TransactionManager reactiveKafkaProducerTemplate(ReactiveKafkaProducerTemplate reactiveKafkaProducerTemplate) {
+        return reactiveKafkaProducerTemplate.transactionManager();
     }
 }
