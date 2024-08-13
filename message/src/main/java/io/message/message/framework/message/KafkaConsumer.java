@@ -46,7 +46,8 @@ public class KafkaConsumer implements ApplicationRunner {
                     } catch (Exception e) {
                         return Mono.error(e);
                     }
-                });
+                })
+                .doOnError(Throwable::printStackTrace);
     }
 
     @Override

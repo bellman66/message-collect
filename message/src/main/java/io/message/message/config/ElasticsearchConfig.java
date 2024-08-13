@@ -6,8 +6,8 @@ import org.apache.http.ssl.SSLContextBuilder;
 import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
-import org.springframework.data.elasticsearch.client.elc.ElasticsearchConfiguration;
-import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
+import org.springframework.data.elasticsearch.client.elc.ReactiveElasticsearchConfiguration;
+import org.springframework.data.elasticsearch.repository.config.EnableReactiveElasticsearchRepositories;
 
 import javax.net.ssl.SSLContext;
 import java.security.KeyManagementException;
@@ -17,8 +17,8 @@ import java.time.Duration;
 
 @Configuration
 @AllArgsConstructor
-@EnableElasticsearchRepositories(basePackages = "io.message.message")
-public class ElasticsearchConfig extends ElasticsearchConfiguration {
+@EnableReactiveElasticsearchRepositories(basePackages = "io.message.message")
+public class ElasticsearchConfig extends ReactiveElasticsearchConfiguration {
 
     private final ElasticsearchProperties elasticsearchProperties;
 
