@@ -2,15 +2,11 @@ package io.message.message.framework.message;
 
 import io.message.message.application.port.output.MessageOutput;
 import io.message.message.domain.interfaces.MessageAble;
-import io.message.message.domain.message.SignalMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.reactive.ReactiveKafkaProducerTemplate;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
-import reactor.kafka.sender.SenderRecord;
-
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -26,10 +22,8 @@ public class KafkaProducer<T extends MessageAble<?>> implements MessageOutput<T>
 
     @Override
     public Mono<T> save(MessageAble<T> messageAble) {
-        SenderRecord<String, T, Class<SignalMessage>> senderRecord = SenderRecord.create(TOPIC_PUBLISH_MESSAGE, null, null, UUID.randomUUID().toString(), messageAble.toMessage(), SignalMessage.class);
-
         return reactiveKafkaProducerTemplate
-                .sendTransactionally(senderRecord)
+                .send(TOPIC_PUBLISH_MESSAGE, messageAble.toMessage())
                 .map(sendResult -> messageAble.toMessage())
                 .doOnError(Throwable::printStackTrace);
     }
