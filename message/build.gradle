@@ -42,7 +42,9 @@ dependencies {
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 
-    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+    // Elasticsearch
+    // https://mvnrepository.com/artifact/org.springframework.data/spring-data-elasticsearch
+    implementation 'org.springframework.data:spring-data-elasticsearch:5.3.2'
 }
 
 tasks.named('test') {
