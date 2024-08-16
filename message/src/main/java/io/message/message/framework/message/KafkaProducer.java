@@ -22,17 +22,21 @@ public class KafkaProducer<T extends MessageAble<?>> implements MessageOutput<T>
 
     @Override
     public Mono<T> save(MessageAble<T> messageAble) {
+        T message = messageAble.toMessage();
+
         return reactiveKafkaProducerTemplate
-                .send(TOPIC_PUBLISH_MESSAGE, messageAble.toMessage())
-                .map(sendResult -> messageAble.toMessage())
+                .send(TOPIC_PUBLISH_MESSAGE, message)
+                .map(ignore -> message)
                 .doOnError(Throwable::printStackTrace);
     }
 
     @Override
-    public void pending(MessageAble<T> messageAble) {
-        reactiveKafkaProducerTemplate
-                .send(TOPIC_PENDING_MESSAGE, messageAble.toMessage())
-                .doOnError(Throwable::printStackTrace)
-                .subscribe();
+    public Mono<T> pending(MessageAble<T> messageAble) {
+        T message = messageAble.toMessage();
+
+        return reactiveKafkaProducerTemplate
+                .send(TOPIC_PENDING_MESSAGE, message)
+                .map(ignore -> message)
+                .doOnError(Throwable::printStackTrace);
     }
 }

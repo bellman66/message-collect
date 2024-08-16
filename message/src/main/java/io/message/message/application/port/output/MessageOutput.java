@@ -7,5 +7,5 @@ public interface MessageOutput<T extends MessageAble<?>> {
 
     Mono<T> save(MessageAble<T> messageAble);
 
-    void pending(MessageAble<T> messageAble);
+    Mono<T> pending(MessageAble<T> messageAble);
 }
