@@ -1,14 +1,13 @@
 package io.message.message.framework.message;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.message.message.application.port.output.MessageOutput;
 import io.message.message.application.port.output.SearchOutput;
 import io.message.message.application.port.output.SignalOutput;
-import io.message.message.domain.enums.MessageStatus;
 import io.message.message.domain.message.PendingMessage;
 import io.message.message.domain.message.SignalMessage;
 import io.message.message.domain.model.MechanicalSignal;
 import io.message.message.domain.search.SignalSearch;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -18,7 +17,6 @@ import org.springframework.kafka.core.reactive.ReactiveKafkaConsumerTemplate;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
 
 @Slf4j
 @Service
@@ -30,7 +28,7 @@ public class KafkaConsumer implements ApplicationRunner {
     private final SearchOutput<SignalSearch> searchOutput;
 
     private final ReactiveKafkaConsumerTemplate<String, ConsumerRecord<String, String>> recordReactiveKafkaConsumerTemplate;
-    private final KafkaProducer<PendingMessage> pendingMessageKafkaProducer;
+    private final MessageOutput<PendingMessage> pendingMessageKafkaProducer;
 
     public Flux<?> consumePublishMessage() {
         return recordReactiveKafkaConsumerTemplate
@@ -47,15 +45,6 @@ public class KafkaConsumer implements ApplicationRunner {
                     Mono<MechanicalSignal> signalSaveMono = signalOutput.save(signalMessage);
 
                     return Mono.zip(searchSaveMono, signalSaveMono);
-                })
-                .publishOn(Schedulers.boundedElastic())
-                .doOnError(throwable -> {
-                    pendingMessageKafkaProducer.pending(PendingMessage.builder()
-                                    .id(UUID.randomUUID().toString())
-                                    .status(MessageStatus.DRAFT)
-                                    .throwable(throwable)
-                                    .build())
-                            .subscribe();
                 });
     }
 

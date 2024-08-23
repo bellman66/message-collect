@@ -1,6 +1,7 @@
 package io.message.message.framework.message;
 
 import io.message.message.application.port.output.MessageOutput;
+import io.message.message.domain.enums.MessageStatus;
 import io.message.message.domain.interfaces.MessageAble;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,22 +22,23 @@ public class KafkaProducer<T extends MessageAble<?>> implements MessageOutput<T>
     private final ReactiveKafkaProducerTemplate<String, T> reactiveKafkaProducerTemplate;
 
     @Override
-    public Mono<T> save(MessageAble<T> messageAble) {
+    public Mono<T> save(MessageStatus status, MessageAble<T> messageAble) {
         T message = messageAble.toMessage();
 
         return reactiveKafkaProducerTemplate
-                .send(TOPIC_PUBLISH_MESSAGE, message)
+                .send(convertToTopic(status), message)
                 .map(ignore -> message)
                 .doOnError(Throwable::printStackTrace);
     }
 
-    @Override
-    public Mono<T> pending(MessageAble<T> messageAble) {
-        T message = messageAble.toMessage();
-
-        return reactiveKafkaProducerTemplate
-                .send(TOPIC_PENDING_MESSAGE, message)
-                .map(ignore -> message)
-                .doOnError(Throwable::printStackTrace);
+    private String convertToTopic(MessageStatus status) {
+        switch (status) {
+            case DRAFT:
+                return TOPIC_PUBLISH_MESSAGE;
+            case PENDING:
+                return TOPIC_PENDING_MESSAGE;
+            default:
+                throw new IllegalArgumentException("Invalid message status");
+        }
     }
 }
