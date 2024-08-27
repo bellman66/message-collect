@@ -13,8 +13,7 @@ import org.springframework.data.cassandra.core.mapping.Table;
 @SuperBuilder
 public class MechanicalSignal extends BaseEntity {
 
-    private MessageStatus status;
+  private MessageStatus status;
 
-    private String content;
-
+  private String content;
 }

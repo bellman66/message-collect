@@ -21,24 +21,24 @@ import reactor.core.publisher.Mono;
 @Transactional(readOnly = true)
 public class SignalAdapter implements SignalOutput<MechanicalSignal>, SearchOutput<SignalSearch> {
 
-    private final MechanicalSignalRepository mechanicalsignalRepository;
+  private final MechanicalSignalRepository mechanicalsignalRepository;
 
-    private final ReactiveElasticsearchOperations reactiveElasticsearchOperations;
+  private final ReactiveElasticsearchOperations reactiveElasticsearchOperations;
 
-    @Override
-    @Transactional
-    public Mono<MechanicalSignal> save(EntityAble<MechanicalSignal> entityAble) {
-        return mechanicalsignalRepository.save(entityAble.toEntity());
-    }
+  @Override
+  @Transactional
+  public Mono<MechanicalSignal> save(EntityAble<MechanicalSignal> entityAble) {
+    return mechanicalsignalRepository.save(entityAble.toEntity());
+  }
 
-    @Override
-    @Transactional
-    public Mono<SignalSearch> save(SearchAble<SignalSearch> search) {
-        return reactiveElasticsearchOperations.save(search.toSearch());
-    }
+  @Override
+  @Transactional
+  public Mono<SignalSearch> save(SearchAble<SignalSearch> search) {
+    return reactiveElasticsearchOperations.save(search.toSearch());
+  }
 
-    @Override
-    public Flux<SearchHit<SignalSearch>> searchByQuery(Query query) {
-        return reactiveElasticsearchOperations.search(query, SignalSearch.class);
-    }
+  @Override
+  public Flux<SearchHit<SignalSearch>> searchByQuery(Query query) {
+    return reactiveElasticsearchOperations.search(query, SignalSearch.class);
+  }
 }

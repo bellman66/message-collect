@@ -14,11 +14,9 @@ import org.springframework.data.cassandra.core.mapping.Table;
 @AllArgsConstructor
 public class Account {
 
-    @PrimaryKey
-    private String id;
+  @PrimaryKey private String id;
 
-    private String name;
+  private String name;
 
-    private int age;
-
+  private int age;
 }

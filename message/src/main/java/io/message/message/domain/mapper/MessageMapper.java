@@ -11,11 +11,10 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface MessageMapper extends MapperExtension {
 
-    MessageMapper INSTANCE = Mappers.getMapper(MessageMapper.class);
+  MessageMapper INSTANCE = Mappers.getMapper(MessageMapper.class);
 
-    @Mapping(target = "id", expression = GENERATE_ID_BY_UUID)
-    @Mapping(target = "status", constant = "DRAFT")
-    SignalMessage toMessage(MessageApiRequestGroup.CreateApiRequest request);
+  @Mapping(target = "id", expression = GENERATE_ID_BY_UUID)
+  SignalMessage toMessage(MessageApiRequestGroup.CreateApiRequest request);
 
-    PendingMessage toPendingMessage(SignalMessage message, Throwable throwable);
+  PendingMessage toPendingMessage(SignalMessage message, Throwable throwable);
 }

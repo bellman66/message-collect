@@ -6,5 +6,5 @@ import reactor.core.publisher.Mono;
 
 public interface MessageOutput<T extends MessageAble<?>> {
 
-    Mono<T> save(MessageStatus status, MessageAble<T> messageAble);
+  Mono<T> save(MessageStatus status, MessageAble<T> messageAble);
 }

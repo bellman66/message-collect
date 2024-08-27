@@ -17,10 +17,9 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 @NoArgsConstructor
 public class SignalSearch extends Search {
 
-    @Field(name = "status", type = FieldType.Text)
-    private MessageStatus status;
+  @Field(name = "status", type = FieldType.Text)
+  private MessageStatus status;
 
-    @Field(name = "content", type = FieldType.Text)
-    private String content;
-
+  @Field(name = "content", type = FieldType.Text)
+  private String content;
 }

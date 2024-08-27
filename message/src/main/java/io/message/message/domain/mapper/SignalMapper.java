@@ -8,8 +8,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface SignalMapper {
 
-    SignalMapper INSTANCE = Mappers.getMapper(SignalMapper.class);
+  SignalMapper INSTANCE = Mappers.getMapper(SignalMapper.class);
 
-    MechanicalSignal toSignal(SignalMessage message);
-
+  MechanicalSignal toSignal(SignalMessage message);
 }

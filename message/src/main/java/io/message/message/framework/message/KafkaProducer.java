@@ -13,32 +13,32 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class KafkaProducer<T extends MessageAble<?>> implements MessageOutput<T> {
 
-    @Value(value = "${producers.topics.publish-message}")
-    private String TOPIC_PUBLISH_MESSAGE;
+  @Value(value = "${producers.topics.publish-message}")
+  private String TOPIC_PUBLISH_MESSAGE;
 
-    @Value(value = "${producers.topics.pending-message}")
-    private String TOPIC_PENDING_MESSAGE;
+  @Value(value = "${producers.topics.pending-message}")
+  private String TOPIC_PENDING_MESSAGE;
 
-    private final ReactiveKafkaProducerTemplate<String, T> reactiveKafkaProducerTemplate;
+  private final ReactiveKafkaProducerTemplate<String, T> reactiveKafkaProducerTemplate;
 
-    @Override
-    public Mono<T> save(MessageStatus status, MessageAble<T> messageAble) {
-        T message = messageAble.toMessage();
+  @Override
+  public Mono<T> save(MessageStatus status, MessageAble<T> messageAble) {
+    T message = messageAble.toMessage();
 
-        return reactiveKafkaProducerTemplate
-                .send(convertToTopic(status), message)
-                .map(ignore -> message)
-                .doOnError(Throwable::printStackTrace);
+    return reactiveKafkaProducerTemplate
+        .send(convertToTopic(status), message)
+        .map(ignore -> message)
+        .doOnError(Throwable::printStackTrace);
+  }
+
+  private String convertToTopic(MessageStatus status) {
+    switch (status) {
+      case DRAFT:
+        return TOPIC_PUBLISH_MESSAGE;
+      case PENDING:
+        return TOPIC_PENDING_MESSAGE;
+      default:
+        throw new IllegalArgumentException("Invalid message status");
     }
-
-    private String convertToTopic(MessageStatus status) {
-        switch (status) {
-            case DRAFT:
-                return TOPIC_PUBLISH_MESSAGE;
-            case PENDING:
-                return TOPIC_PENDING_MESSAGE;
-            default:
-                throw new IllegalArgumentException("Invalid message status");
-        }
-    }
+  }
 }
