@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.message.message.application.port.output.MessageOutput;
 import io.message.message.application.port.output.SearchOutput;
 import io.message.message.application.port.output.SignalOutput;
+import io.message.message.domain.enums.MessageStatus;
 import io.message.message.domain.message.PendingMessage;
 import io.message.message.domain.message.SignalMessage;
 import io.message.message.domain.model.MechanicalSignal;
@@ -44,7 +45,10 @@ public class KafkaConsumer implements ApplicationRunner {
                     Mono<SignalSearch> searchSaveMono = searchOutput.save(signalMessage);
                     Mono<MechanicalSignal> signalSaveMono = signalOutput.save(signalMessage);
 
-                    return Mono.zip(searchSaveMono, signalSaveMono);
+                    return Mono.zip(searchSaveMono, signalSaveMono)
+                            .map(tuple -> (Object) tuple)
+                            .onErrorResume(throwable -> pendingMessageKafkaProducer.save(MessageStatus.PENDING,
+                                    PendingMessage.builder().status(MessageStatus.PENDING).throwable(throwable).id(signalMessage.getId()).build()));
                 });
     }
 
