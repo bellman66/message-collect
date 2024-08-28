@@ -15,10 +15,10 @@ import reactor.core.publisher.Flux;
 @Transactional(readOnly = true)
 public class SignalService implements SignalReadUseCase<SignalSearch> {
 
-  private final SearchOutput<SignalSearch> searchOutput;
+    private final SearchOutput<SignalSearch> searchOutput;
 
-  @Override
-  public Flux<SearchHit<SignalSearch>> searchGroupByQuery(Query query) {
-    return searchOutput.searchByQuery(query);
-  }
+    @Override
+    public Flux<SearchHit<SignalSearch>> searchGroupByQuery(Query query) {
+        return searchOutput.searchByQuery(query);
+    }
 }

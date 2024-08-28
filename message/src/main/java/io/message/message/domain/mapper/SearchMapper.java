@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface SearchMapper {
 
-  SearchMapper INSTANCE = Mappers.getMapper(SearchMapper.class);
+    SearchMapper INSTANCE = Mappers.getMapper(SearchMapper.class);
 
-  SignalSearch toSearch(SignalMessage message);
+    SignalSearch toSearch(SignalMessage message);
 }

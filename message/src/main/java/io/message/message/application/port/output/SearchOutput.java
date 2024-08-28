@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 
 public interface SearchOutput<T extends Search> {
 
-  Mono<T> save(SearchAble<T> search);
+    Mono<T> save(SearchAble<T> search);
 
-  Flux<SearchHit<SignalSearch>> searchByQuery(Query query);
+    Flux<SearchHit<SignalSearch>> searchByQuery(Query query);
 }

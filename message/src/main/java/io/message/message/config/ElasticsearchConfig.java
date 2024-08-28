@@ -19,28 +19,30 @@ import org.springframework.data.elasticsearch.repository.config.EnableReactiveEl
 @EnableReactiveElasticsearchRepositories(basePackages = "io.message.message")
 public class ElasticsearchConfig extends ReactiveElasticsearchConfiguration {
 
-  private final ElasticsearchProperties elasticsearchProperties;
+    private final ElasticsearchProperties elasticsearchProperties;
 
-  @Override
-  public ClientConfiguration clientConfiguration() {
-    return ClientConfiguration.builder()
-        .connectedTo(elasticsearchProperties.getUris().toArray(new String[0]))
-        .usingSsl(disableSslVerification())
-        .withBasicAuth(elasticsearchProperties.getUsername(), elasticsearchProperties.getPassword())
-        .withConnectTimeout(Duration.ofSeconds(5))
-        .withSocketTimeout(Duration.ofSeconds(3))
-        .build();
-  }
-
-  public static SSLContext disableSslVerification() {
-    try {
-      return SSLContextBuilder.create()
-          .setProtocol("SSL")
-          .loadTrustMaterial(TrustAllStrategy.INSTANCE)
-          .build();
-    } catch (NoSuchAlgorithmException | KeyStoreException | KeyManagementException e) {
-      e.printStackTrace();
+    @Override
+    public ClientConfiguration clientConfiguration() {
+        return ClientConfiguration.builder()
+                .connectedTo(elasticsearchProperties.getUris().toArray(new String[0]))
+                .usingSsl(disableSslVerification())
+                .withBasicAuth(
+                        elasticsearchProperties.getUsername(),
+                        elasticsearchProperties.getPassword())
+                .withConnectTimeout(Duration.ofSeconds(5))
+                .withSocketTimeout(Duration.ofSeconds(3))
+                .build();
     }
-    return null;
-  }
+
+    public static SSLContext disableSslVerification() {
+        try {
+            return SSLContextBuilder.create()
+                    .setProtocol("SSL")
+                    .loadTrustMaterial(TrustAllStrategy.INSTANCE)
+                    .build();
+        } catch (NoSuchAlgorithmException | KeyStoreException | KeyManagementException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

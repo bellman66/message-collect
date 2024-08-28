@@ -16,5 +16,5 @@ import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 @EqualsAndHashCode(of = {"id"})
 public abstract class DefaultMessage<T> implements MessageAble<T> {
 
-  @Id @PrimaryKey private String id;
+    @Id @PrimaryKey private String id;
 }

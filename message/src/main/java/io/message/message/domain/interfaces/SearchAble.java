@@ -4,5 +4,5 @@ import io.message.message.domain.search.base.Search;
 
 public interface SearchAble<T extends Search> {
 
-  T toSearch();
+    T toSearch();
 }

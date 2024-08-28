@@ -18,35 +18,35 @@ import reactor.kafka.sender.SenderOptions;
 @RequiredArgsConstructor
 public class KafkaConfig {
 
-  private final KafkaProperties kafkaProperties;
+    private final KafkaProperties kafkaProperties;
 
-  @Value("${consumers.topics.publish-message}")
-  private String publishMessageTopic;
+    @Value("${consumers.topics.publish-message}")
+    private String publishMessageTopic;
 
-  @Value("${consumers.topics.pending-message}")
-  private String pendingMessageTopic;
+    @Value("${consumers.topics.pending-message}")
+    private String pendingMessageTopic;
 
-  @Bean
-  public ReceiverOptions<String, String> receiverOptions() {
-    ReceiverOptions<String, String> receiverOptions =
-        ReceiverOptions.create(
-            kafkaProperties.buildConsumerProperties(new DefaultSslBundleRegistry()));
-    return receiverOptions.subscription(List.of(publishMessageTopic, pendingMessageTopic));
-  }
+    @Bean
+    public ReceiverOptions<String, String> receiverOptions() {
+        ReceiverOptions<String, String> receiverOptions =
+                ReceiverOptions.create(
+                        kafkaProperties.buildConsumerProperties(new DefaultSslBundleRegistry()));
+        return receiverOptions.subscription(List.of(publishMessageTopic, pendingMessageTopic));
+    }
 
-  @Bean
-  public SenderOptions<String, String> senderOptions() {
-    return SenderOptions.create(
-        kafkaProperties.buildProducerProperties(new DefaultSslBundleRegistry()));
-  }
+    @Bean
+    public SenderOptions<String, String> senderOptions() {
+        return SenderOptions.create(
+                kafkaProperties.buildProducerProperties(new DefaultSslBundleRegistry()));
+    }
 
-  @Bean
-  public ReactiveKafkaConsumerTemplate reactiveKafkaConsumerTemplate() {
-    return new ReactiveKafkaConsumerTemplate<>(receiverOptions());
-  }
+    @Bean
+    public ReactiveKafkaConsumerTemplate reactiveKafkaConsumerTemplate() {
+        return new ReactiveKafkaConsumerTemplate<>(receiverOptions());
+    }
 
-  @Bean
-  public ReactiveKafkaProducerTemplate reactiveKafkaProducerTemplate() {
-    return new ReactiveKafkaProducerTemplate<>(senderOptions());
-  }
+    @Bean
+    public ReactiveKafkaProducerTemplate reactiveKafkaProducerTemplate() {
+        return new ReactiveKafkaProducerTemplate<>(senderOptions());
+    }
 }

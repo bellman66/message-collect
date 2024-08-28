@@ -16,10 +16,10 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = false)
 public class PendingMessage extends DefaultMessage<PendingMessage> {
 
-  private Throwable throwable;
+    private Throwable throwable;
 
-  @Override
-  public PendingMessage toMessage() {
-    return this;
-  }
+    @Override
+    public PendingMessage toMessage() {
+        return this;
+    }
 }

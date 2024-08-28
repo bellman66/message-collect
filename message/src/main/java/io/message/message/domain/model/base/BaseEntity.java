@@ -10,5 +10,5 @@ import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 @SuperBuilder
 public abstract class BaseEntity {
 
-  @PrimaryKey private String id;
+    @PrimaryKey private String id;
 }

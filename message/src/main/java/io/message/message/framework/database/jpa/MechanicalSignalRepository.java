@@ -6,4 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MechanicalSignalRepository
-    extends ReactiveCassandraRepository<MechanicalSignal, String> {}
+        extends ReactiveCassandraRepository<MechanicalSignal, String> {}

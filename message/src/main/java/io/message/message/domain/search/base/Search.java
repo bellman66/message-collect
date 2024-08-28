@@ -14,7 +14,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 @NoArgsConstructor
 public abstract class Search {
 
-  @Id
-  @Field(name = "id", type = FieldType.Text)
-  protected String id;
+    @Id
+    @Field(name = "id", type = FieldType.Text)
+    protected String id;
 }

@@ -21,22 +21,22 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class SignalMessage extends DefaultMessage<SignalMessage>
-    implements EntityAble<MechanicalSignal>, SearchAble<SignalSearch> {
+        implements EntityAble<MechanicalSignal>, SearchAble<SignalSearch> {
 
-  private String content;
+    private String content;
 
-  @Override
-  public SignalMessage toMessage() {
-    return this;
-  }
+    @Override
+    public SignalMessage toMessage() {
+        return this;
+    }
 
-  @Override
-  public MechanicalSignal toEntity() {
-    return SignalMapper.INSTANCE.toSignal(this);
-  }
+    @Override
+    public MechanicalSignal toEntity() {
+        return SignalMapper.INSTANCE.toSignal(this);
+    }
 
-  @Override
-  public SignalSearch toSearch() {
-    return SearchMapper.INSTANCE.toSearch(this);
-  }
+    @Override
+    public SignalSearch toSearch() {
+        return SearchMapper.INSTANCE.toSearch(this);
+    }
 }

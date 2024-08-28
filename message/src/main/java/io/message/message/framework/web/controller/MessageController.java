@@ -24,25 +24,28 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/message")
 public class MessageController {
 
-  private final MessageOutput<SignalMessage> messageOutput;
+    private final MessageOutput<SignalMessage> messageOutput;
 
-  private final SignalReadUseCase<SignalSearch> signalSignalReadUseCase;
+    private final SignalReadUseCase<SignalSearch> signalSignalReadUseCase;
 
-  @PostMapping("/publish")
-  public Mono<ResponseEntity<String>> publishMessage(
-      @RequestBody MessageApiRequestGroup.CreateApiRequest request) {
-    SignalMessage signalMessage = MessageMapper.INSTANCE.toMessage(request);
+    @PostMapping("/publish")
+    public Mono<ResponseEntity<String>> publishMessage(
+            @RequestBody MessageApiRequestGroup.CreateApiRequest request) {
+        SignalMessage signalMessage = MessageMapper.INSTANCE.toMessage(request);
 
-    return messageOutput
-        .save(MessageStatus.DRAFT, signalMessage)
-        .map(message -> ResponseEntity.ok(message.getId()));
-  }
+        return messageOutput
+                .save(MessageStatus.DRAFT, signalMessage)
+                .map(message -> ResponseEntity.ok(message.getId()));
+    }
 
-  @PostMapping("/search")
-  public Mono<ResponseEntity<List<SearchHit<SignalSearch>>>> searchGroupByQuery(
-      @RequestBody MessageApiRequestGroup.SearchApiRequest request) {
-    CriteriaQuery query = new CriteriaQuery(Criteria.where("content").is(request.content()));
+    @PostMapping("/search")
+    public Mono<ResponseEntity<List<SearchHit<SignalSearch>>>> searchGroupByQuery(
+            @RequestBody MessageApiRequestGroup.SearchApiRequest request) {
+        CriteriaQuery query = new CriteriaQuery(Criteria.where("content").is(request.content()));
 
-    return signalSignalReadUseCase.searchGroupByQuery(query).collectList().map(ResponseEntity::ok);
-  }
+        return signalSignalReadUseCase
+                .searchGroupByQuery(query)
+                .collectList()
+                .map(ResponseEntity::ok);
+    }
 }

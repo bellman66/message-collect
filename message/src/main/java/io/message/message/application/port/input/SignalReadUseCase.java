@@ -7,5 +7,5 @@ import reactor.core.publisher.Flux;
 
 public interface SignalReadUseCase<T extends Search> {
 
-  Flux<SearchHit<T>> searchGroupByQuery(Query query);
+    Flux<SearchHit<T>> searchGroupByQuery(Query query);
 }
