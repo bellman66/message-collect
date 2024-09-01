@@ -30,6 +30,12 @@ spotless {
     }
 }
 
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.modulith:spring-modulith-bom:1.2.3'
+    }
+}
+
 dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web') {
         exclude module: 'spring-boot-starter-tomcat'
@@ -58,6 +64,9 @@ dependencies {
     // Elasticsearch
     // https://mvnrepository.com/artifact/org.springframework.data/spring-data-elasticsearch
     implementation 'org.springframework.data:spring-data-elasticsearch:5.3.2'
+
+    // Modulith
+    implementation 'org.springframework.modulith:spring-modulith-starter-test'
 }
 
 tasks.named('test') {
