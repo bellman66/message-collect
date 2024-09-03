@@ -26,12 +26,20 @@ public class KafkaConfig {
     @Value("${consumers.topics.pending-message}")
     private String pendingMessageTopic;
 
-    @Bean
-    public ReceiverOptions<String, String> receiverOptions() {
+    @Bean("publishMessageReceiverOptions")
+    public ReceiverOptions<String, String> publishMessageReceiverOptions() {
         ReceiverOptions<String, String> receiverOptions =
                 ReceiverOptions.create(
                         kafkaProperties.buildConsumerProperties(new DefaultSslBundleRegistry()));
-        return receiverOptions.subscription(List.of(publishMessageTopic, pendingMessageTopic));
+        return receiverOptions.subscription(List.of(publishMessageTopic));
+    }
+
+    @Bean("pendingMessageReceiverOptions")
+    public ReceiverOptions<String, String> pendingMessageReceiverOptions() {
+        ReceiverOptions<String, String> receiverOptions =
+                ReceiverOptions.create(
+                        kafkaProperties.buildConsumerProperties(new DefaultSslBundleRegistry()));
+        return receiverOptions.subscription(List.of(pendingMessageTopic));
     }
 
     @Bean
@@ -40,9 +48,14 @@ public class KafkaConfig {
                 kafkaProperties.buildProducerProperties(new DefaultSslBundleRegistry()));
     }
 
-    @Bean
-    public ReactiveKafkaConsumerTemplate reactiveKafkaConsumerTemplate() {
-        return new ReactiveKafkaConsumerTemplate<>(receiverOptions());
+    @Bean("publishMessageReactiveKafkaConsumerTemplate")
+    public ReactiveKafkaConsumerTemplate publishMessageReactiveKafkaConsumerTemplate() {
+        return new ReactiveKafkaConsumerTemplate<>(publishMessageReceiverOptions());
+    }
+
+    @Bean("pendingMessageReactiveKafkaConsumerTemplate")
+    public ReactiveKafkaConsumerTemplate pendingMessageReactiveKafkaConsumerTemplate() {
+        return new ReactiveKafkaConsumerTemplate<>(pendingMessageReceiverOptions());
     }
 
     @Bean

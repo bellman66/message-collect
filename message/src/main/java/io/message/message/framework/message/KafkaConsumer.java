@@ -29,11 +29,11 @@ public class KafkaConsumer implements ApplicationRunner {
     private final SearchOutput<SignalSearch> searchOutput;
 
     private final ReactiveKafkaConsumerTemplate<String, ConsumerRecord<String, String>>
-            recordReactiveKafkaConsumerTemplate;
+            publishMessageReactiveKafkaConsumerTemplate;
     private final MessageOutput<PendingMessage> pendingMessageKafkaProducer;
 
-    public Flux<?> consumePublishMessage() {
-        return recordReactiveKafkaConsumerTemplate
+    public Flux<?> publishMessageReactiveKafkaConsumerTemplate() {
+        return publishMessageReactiveKafkaConsumerTemplate
                 .receiveAutoAck()
                 .doOnNext(
                         consumerRecord ->
@@ -69,6 +69,6 @@ public class KafkaConsumer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        consumePublishMessage().subscribe();
+        publishMessageReactiveKafkaConsumerTemplate().subscribe();
     }
 }
