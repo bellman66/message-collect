@@ -30,9 +30,11 @@ public class KafkaConsumer implements ApplicationRunner {
 
     private final ReactiveKafkaConsumerTemplate<String, ConsumerRecord<String, String>>
             publishMessageReactiveKafkaConsumerTemplate;
+    private final ReactiveKafkaConsumerTemplate<String, ConsumerRecord<String, String>>
+            pendingMessageReactiveKafkaConsumerTemplate;
     private final MessageOutput<PendingMessage> pendingMessageKafkaProducer;
 
-    public Flux<?> publishMessageReactiveKafkaConsumerTemplate() {
+    public Flux<?> publishMessageReactiveKafkaConsumerTemplateFlux() {
         return publishMessageReactiveKafkaConsumerTemplate
                 .receiveAutoAck()
                 .doOnNext(
@@ -67,8 +69,28 @@ public class KafkaConsumer implements ApplicationRunner {
                         });
     }
 
+    public Flux<?> pendingMessageReactiveKafkaConsumerTemplateFlux() {
+        return pendingMessageReactiveKafkaConsumerTemplate
+                .receiveAutoAck()
+                .doOnNext(
+                        consumerRecord ->
+                                log.info(
+                                        "received key={}, value={} from topic={}, offset={}",
+                                        consumerRecord.key(),
+                                        consumerRecord.value(),
+                                        consumerRecord.topic(),
+                                        consumerRecord.offset()))
+                .flatMap(
+                        consumerRecord ->
+                                Mono.just(
+                                        objectMapper.convertValue(
+                                                consumerRecord.value(), SignalMessage.class)))
+                .flatMap(signalOutput::save);
+    }
+
     @Override
     public void run(ApplicationArguments args) {
-        publishMessageReactiveKafkaConsumerTemplate().subscribe();
+        publishMessageReactiveKafkaConsumerTemplateFlux().subscribe();
+        pendingMessageReactiveKafkaConsumerTemplateFlux().subscribe();
     }
 }
