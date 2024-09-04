@@ -1,12 +1,12 @@
-package io.message.message.framework.database;
+package io.message.message.adapter.database;
 
+import io.message.message.adapter.database.jpa.MechanicalSignalRepository;
 import io.message.message.application.port.output.SearchOutput;
 import io.message.message.application.port.output.SignalOutput;
 import io.message.message.domain.interfaces.EntityAble;
 import io.message.message.domain.interfaces.SearchAble;
 import io.message.message.domain.model.MechanicalSignal;
 import io.message.message.domain.search.SignalSearch;
-import io.message.message.framework.database.jpa.MechanicalSignalRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.elasticsearch.core.ReactiveElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHit;

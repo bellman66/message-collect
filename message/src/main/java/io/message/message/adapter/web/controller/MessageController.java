@@ -1,12 +1,12 @@
-package io.message.message.framework.web.controller;
+package io.message.message.adapter.web.controller;
 
+import io.message.message.adapter.web.data.request.MessageApiRequestGroup;
 import io.message.message.application.port.input.SignalReadUseCase;
 import io.message.message.application.port.output.MessageOutput;
 import io.message.message.domain.enums.MessageStatus;
 import io.message.message.domain.mapper.MessageMapper;
 import io.message.message.domain.message.SignalMessage;
 import io.message.message.domain.search.SignalSearch;
-import io.message.message.framework.web.data.request.MessageApiRequestGroup;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.data.elasticsearch.core.SearchHit;

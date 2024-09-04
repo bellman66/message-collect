@@ -1,8 +1,8 @@
 package io.message.message.domain.mapper;
 
+import io.message.message.adapter.web.data.request.MessageApiRequestGroup;
 import io.message.message.domain.message.PendingMessage;
 import io.message.message.domain.message.SignalMessage;
-import io.message.message.framework.web.data.request.MessageApiRequestGroup;
 import io.message.message.global.base.MapperExtension;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

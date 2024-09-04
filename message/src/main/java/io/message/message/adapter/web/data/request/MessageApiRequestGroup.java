@@ -1,4 +1,4 @@
-package io.message.message.framework.web.data.request;
+package io.message.message.adapter.web.data.request;
 
 public class MessageApiRequestGroup {
 

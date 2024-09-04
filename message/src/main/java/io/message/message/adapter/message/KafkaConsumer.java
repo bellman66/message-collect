@@ -1,4 +1,4 @@
-package io.message.message.framework.message;
+package io.message.message.adapter.message;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.message.message.application.port.output.MessageOutput;
