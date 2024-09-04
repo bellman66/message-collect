@@ -40,11 +40,11 @@ public class KafkaConsumer implements ApplicationRunner {
                 .doOnNext(
                         consumerRecord ->
                                 log.info(
-                                        "received key={}, value={} from topic={}, offset={}",
+                                        "[{} | {}] received key={}, value={}",
+                                        consumerRecord.topic().toUpperCase(),
+                                        consumerRecord.offset(),
                                         consumerRecord.key(),
-                                        consumerRecord.value(),
-                                        consumerRecord.topic(),
-                                        consumerRecord.offset()))
+                                        consumerRecord.value()))
                 .flatMap(
                         consumerRecord ->
                                 Mono.just(
@@ -75,17 +75,21 @@ public class KafkaConsumer implements ApplicationRunner {
                 .doOnNext(
                         consumerRecord ->
                                 log.info(
-                                        "received key={}, value={} from topic={}, offset={}",
+                                        "[{} | {}] received key={}, value={}",
+                                        consumerRecord.topic().toUpperCase(),
+                                        consumerRecord.offset(),
                                         consumerRecord.key(),
-                                        consumerRecord.value(),
-                                        consumerRecord.topic(),
-                                        consumerRecord.offset()))
+                                        consumerRecord.value()))
                 .flatMap(
                         consumerRecord ->
                                 Mono.just(
                                         objectMapper.convertValue(
                                                 consumerRecord.value(), SignalMessage.class)))
-                .flatMap(signalOutput::save);
+                .doOnNext(
+                        signalMessage ->
+                                log.info(
+                                        "received pending message with id={}",
+                                        signalMessage.getId()));
     }
 
     @Override
