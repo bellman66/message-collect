@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
@@ -14,7 +15,10 @@ import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"id"})
+@ToString
 public abstract class DefaultMessage<T> implements MessageAble<T> {
 
-    @Id @PrimaryKey private String id;
+    @Id
+    @PrimaryKey
+    private String id;
 }

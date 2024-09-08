@@ -66,7 +66,8 @@ public class KafkaConsumer implements ApplicationRunner {
                                                                     .throwable(throwable)
                                                                     .id(signalMessage.getId())
                                                                     .build()));
-                        });
+                        })
+                .doOnError(ex -> log.error(ex.getMessage()));
     }
 
     public Flux<?> pendingMessageReactiveKafkaConsumerTemplateFlux() {
