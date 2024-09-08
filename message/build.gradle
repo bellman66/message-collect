@@ -72,6 +72,9 @@ dependencies {
     // Actuator & Prometheus
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'io.micrometer:micrometer-registry-prometheus'
+
+    // TSID
+    implementation 'io.hypersistence:hypersistence-utils-hibernate-63:3.8.2'
 }
 
 tasks.named('test') {
