@@ -7,7 +7,6 @@ import io.message.message.domain.enums.MessageStatus;
 import io.message.message.domain.mapper.MessageMapper;
 import io.message.message.domain.message.SignalMessage;
 import io.message.message.domain.search.SignalSearch;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.query.Criteria;
@@ -19,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/message")
@@ -26,7 +27,7 @@ public class MessageController {
 
     private final MessageOutput<SignalMessage> messageOutput;
 
-    private final SignalReadUseCase<SignalSearch> signalSignalReadUseCase;
+    private final SignalReadUseCase<SignalSearch> signalReadUseCase;
 
     @PostMapping("/publish")
     public Mono<ResponseEntity<String>> publishMessage(
@@ -43,7 +44,7 @@ public class MessageController {
             @RequestBody MessageApiRequestGroup.SearchApiRequest request) {
         CriteriaQuery query = new CriteriaQuery(Criteria.where("content").is(request.content()));
 
-        return signalSignalReadUseCase
+        return signalReadUseCase
                 .searchGroupByQuery(query)
                 .collectList()
                 .map(ResponseEntity::ok);
