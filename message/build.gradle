@@ -75,6 +75,10 @@ dependencies {
 
     // TSID
     implementation 'io.hypersistence:hypersistence-utils-hibernate-63:3.8.2'
+
+    // Avro
+    // https://mvnrepository.com/artifact/org.apache.avro/avro
+    implementation group: 'org.apache.avro', name: 'avro', version: '1.12.0'
 }
 
 tasks.named('test') {
