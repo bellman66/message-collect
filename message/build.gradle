@@ -5,6 +5,7 @@ plugins {
     id 'org.graalvm.buildtools.native' version '0.10.2'
     id 'com.diffplug.spotless' version '6.25.0'
     id "io.sentry.jvm.gradle" version "4.11.0"
+    id "com.github.davidmc24.gradle.plugin.avro" version "1.9.1"
 }
 
 group = 'io.message'
@@ -17,6 +18,7 @@ java {
 }
 
 repositories {
+    gradlePluginPortal()
     mavenCentral()
 }
 
