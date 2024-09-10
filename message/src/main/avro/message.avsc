@@ -1,0 +1,10 @@
+{
+  "namespace": "io.message.message",
+  "type": "enum",
+  "name": "TOPIC",
+  "symbols": [
+    "TOPIC_1",
+    "TOPIC_2",
+    "TOPIC_3"
+  ]
+}
