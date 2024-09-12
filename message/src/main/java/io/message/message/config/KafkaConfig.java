@@ -1,8 +1,7 @@
 package io.message.message.config;
 
-import java.util.List;
+import io.message.message.MessageTopic;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.boot.ssl.DefaultSslBundleRegistry;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +12,8 @@ import org.springframework.kafka.core.reactive.ReactiveKafkaProducerTemplate;
 import reactor.kafka.receiver.ReceiverOptions;
 import reactor.kafka.sender.SenderOptions;
 
+import java.util.List;
+
 @Configuration
 @EnableKafka
 @RequiredArgsConstructor
@@ -20,18 +21,12 @@ public class KafkaConfig {
 
     private final KafkaProperties kafkaProperties;
 
-    @Value("${consumers.topics.publish-message}")
-    private String publishMessageTopic;
-
-    @Value("${consumers.topics.pending-message}")
-    private String pendingMessageTopic;
-
     @Bean("publishMessageReceiverOptions")
     public ReceiverOptions<String, String> publishMessageReceiverOptions() {
         ReceiverOptions<String, String> receiverOptions =
                 ReceiverOptions.create(
                         kafkaProperties.buildConsumerProperties(new DefaultSslBundleRegistry()));
-        return receiverOptions.subscription(List.of(publishMessageTopic));
+        return receiverOptions.subscription(List.of(MessageTopic.PUBLISH.name()));
     }
 
     @Bean("pendingMessageReceiverOptions")
@@ -39,7 +34,7 @@ public class KafkaConfig {
         ReceiverOptions<String, String> receiverOptions =
                 ReceiverOptions.create(
                         kafkaProperties.buildConsumerProperties(new DefaultSslBundleRegistry()));
-        return receiverOptions.subscription(List.of(pendingMessageTopic));
+        return receiverOptions.subscription(List.of(MessageTopic.PENDING.name()));
     }
 
     @Bean
