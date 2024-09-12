@@ -1,10 +1,9 @@
 {
   "namespace": "io.message.message",
   "type": "enum",
-  "name": "TOPIC",
+  "name": "MessageTopic",
   "symbols": [
-    "TOPIC_1",
-    "TOPIC_2",
-    "TOPIC_3"
+    "PUBLISH",
+    "PENDING"
   ]
 }

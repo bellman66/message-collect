@@ -28,15 +28,3 @@ spring:
     uris: localhost:9200
     username: elastic
     password: l=DHebjFOjYgIE+--EAX
-
-producers:
-  topics:
-    publish-message: publish_message
-    pending-message: pending_message
-
-consumers:
-  topics:
-    publish-message: publish_message
-    pending-message: pending_message
-  group:
-    name: message
