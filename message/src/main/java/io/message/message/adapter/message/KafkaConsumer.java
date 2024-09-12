@@ -1,10 +1,10 @@
 package io.message.message.adapter.message;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.message.message.MessageTopic;
 import io.message.message.application.port.output.MessageOutput;
 import io.message.message.application.port.output.SearchOutput;
 import io.message.message.application.port.output.SignalOutput;
-import io.message.message.domain.enums.MessageStatus;
 import io.message.message.domain.message.PendingMessage;
 import io.message.message.domain.message.SignalMessage;
 import io.message.message.domain.model.MechanicalSignal;
@@ -61,7 +61,7 @@ public class KafkaConsumer implements ApplicationRunner {
                                     .onErrorResume(
                                             throwable ->
                                                     pendingMessageKafkaProducer.save(
-                                                            MessageStatus.PENDING,
+                                                            MessageTopic.PENDING,
                                                             PendingMessage.builder()
                                                                     .throwable(throwable)
                                                                     .id(signalMessage.getId())

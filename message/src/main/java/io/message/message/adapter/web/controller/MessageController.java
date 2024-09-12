@@ -1,9 +1,9 @@
 package io.message.message.adapter.web.controller;
 
+import io.message.message.MessageTopic;
 import io.message.message.adapter.web.data.request.MessageApiRequestGroup;
 import io.message.message.application.port.input.SignalReadUseCase;
 import io.message.message.application.port.output.MessageOutput;
-import io.message.message.domain.enums.MessageStatus;
 import io.message.message.domain.mapper.MessageMapper;
 import io.message.message.domain.message.SignalMessage;
 import io.message.message.domain.search.SignalSearch;
@@ -35,7 +35,7 @@ public class MessageController {
         SignalMessage signalMessage = MessageMapper.INSTANCE.toMessage(request);
 
         return messageOutput
-                .save(MessageStatus.DRAFT, signalMessage)
+                .save(MessageTopic.PUBLISH, signalMessage)
                 .map(message -> ResponseEntity.ok(message.getId()));
     }
 
