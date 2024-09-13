@@ -97,3 +97,7 @@ sentry {
     projectName = "java-spring-boot"
     authToken = System.getenv("SENTRY_AUTH_TOKEN")
 }
+
+tasks.named('generateAvroJava') {
+    dependsOn 'generateSentryBundleIdJava'
+}
