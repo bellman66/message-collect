@@ -27,4 +27,17 @@ spring:
   elasticsearch:
     uris: localhost:9200
     username: elastic
-    password: l=DHebjFOjYgIE+--EAX
+    password: AE==m6=RFUS-SvUbgY1N
+
+management:
+  endpoints:
+    enabled-by-default: false
+    jmx:
+      exposure:
+        exclude: '*'
+        include: info, health
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
