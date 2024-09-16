@@ -30,14 +30,25 @@ spring:
     password: AE==m6=RFUS-SvUbgY1N
 
 management:
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
+    prometheus:
+      enabled: true
+    metrics:
+      enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
   endpoints:
     enabled-by-default: false
     jmx:
       exposure:
         exclude: '*'
         include: info, health
-  endpoint:
-    info:
-      enabled: true
-    health:
-      enabled: true
+    web:
+      exposure:
+        include: info, health, prometheus, metrics
