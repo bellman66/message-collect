@@ -44,17 +44,17 @@ public class KafkaConfig {
     }
 
     @Bean("publishMessageReactiveKafkaConsumerTemplate")
-    public ReactiveKafkaConsumerTemplate publishMessageReactiveKafkaConsumerTemplate() {
+    public ReactiveKafkaConsumerTemplate<String, String> publishMessageReactiveKafkaConsumerTemplate() {
         return new ReactiveKafkaConsumerTemplate<>(publishMessageReceiverOptions());
     }
 
     @Bean("pendingMessageReactiveKafkaConsumerTemplate")
-    public ReactiveKafkaConsumerTemplate pendingMessageReactiveKafkaConsumerTemplate() {
+    public ReactiveKafkaConsumerTemplate<String, String> pendingMessageReactiveKafkaConsumerTemplate() {
         return new ReactiveKafkaConsumerTemplate<>(pendingMessageReceiverOptions());
     }
 
     @Bean
-    public ReactiveKafkaProducerTemplate reactiveKafkaProducerTemplate() {
+    public ReactiveKafkaProducerTemplate<String, String> reactiveKafkaProducerTemplate() {
         return new ReactiveKafkaProducerTemplate<>(senderOptions());
     }
 }
